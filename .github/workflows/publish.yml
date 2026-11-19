@@ -1,0 +1,36 @@
+name: Publish release
+
+# Each dist/ShmeesMediaCenter-<version>.zip on this branch becomes a GitHub release
+# tagged v<version> on main, marked as a pre-release (test build) until it's tested on a console.
+on:
+  push:
+    branches: [releases]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish any new zips
+        run: |
+          for z in dist/ShmeesMediaCenter-*.zip; do
+            v=$(basename "$z" .zip); v=${v#ShmeesMediaCenter-}
+            if gh release view "v$v" >/dev/null 2>&1; then
+              echo "v$v already published"; continue
+            fi
+            gh release create "v$v" "$z" --target main --prerelease \
+              --title "Shmees Media Center $v (test build)" \
+              --notes "Test build of Shmees Media Center $v for the Xbox 360.
+
+          **Install:** unzip and copy the \`Homebrew\` folder to the root of Hdd1, then launch \`Hdd1:\\Homebrew\\ShmeesMediaCenter\\ShmeesMediaCenter.xex\` from Aurora. Full steps are in INSTALL.txt inside the zip.
+
+          New in 0.5: a sixth decoding thread, 1080p starts without deblocking, and an optional vector-unit mode gated by the included ShmeesVMXProbe. **0.5 hasn't been tested on a console yet**; 0.3 played H.264/AAC MP4 with sound on a real Xbox 360 Slim. See DEVLOG.md for details.
+
+          Source for this build (and the FFmpeg LGPL build scripts and patch) is in this repository."
+          done
