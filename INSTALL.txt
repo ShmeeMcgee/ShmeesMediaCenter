@@ -1,0 +1,60 @@
+SHMEES MEDIA CENTER 0.5 - INSTALL
+=================================
+
+Nothing here touches Aurora, DashLaunch, launch.ini, or your exploit files. The app only
+writes inside its own folder (a "data" folder and ShmeesMediaCenter.log).
+
+
+1. COPY IT TO THE CONSOLE (FTP)
+-------------------------------
+- On the console, open Aurora. Its FTP server is on while Aurora runs.
+- On the PC, open FileZilla and connect to your console's IP address on port 21.
+  Aurora's default login is user xboxftp, password xboxftp (use yours if you changed it).
+- Copy the Homebrew folder from this zip to the root of Hdd1. You get:
+    Hdd1/Homebrew/ShmeesMediaCenter/ShmeesMediaCenter.xex
+    Hdd1/Homebrew/ShmeesVMXProbe/ShmeesVMXProbe.xex   (optional, see step 5)
+
+2. ADD SOMETHING TO WATCH
+-------------------------
+- Movies:   Hdd1/Movies/Inception (2010).mp4
+            Hdd1/Movies/Inception (2010).jpg        (poster, optional)
+- TV shows: Hdd1/TV Shows/Show Name/Season 1/Show Name - S01E01.mp4
+            Hdd1/TV Shows/Show Name/poster.jpg      (optional)
+- Kodi-style .nfo files beside a video fill in its year, plot and genre.
+- A USB drive's \Movies and \TV Shows folders are read too.
+
+File names on Hdd1 can be at most 42 characters, extension included (the console's
+FATX limit): a longer name fails to copy. USB drives don't have the limit.
+
+Video: MP4 with H.264 video and AAC sound plays. 720p and below play at full quality.
+1080p H.264 is still short of full frame rate; convert to 720p for smooth playback.
+
+3. LAUNCH IT
+------------
+In Aurora, open the file manager, go to Hdd1:\Homebrew\ShmeesMediaCenter and launch
+ShmeesMediaCenter.xex. You can also add Hdd1:\Homebrew to Aurora's homebrew scan paths
+so the app appears with your other homebrew.
+
+4. CONTROLS
+-----------
+D-pad or left stick moves, A selects, B goes back, LB/RB change the featured title on
+Home. Left from the first column opens the side menu. While playing: left/right or
+LT/RT seek. Settings > Exit to Aurora (or Back) returns to Aurora.
+
+5. VECTOR UNIT (OPTIONAL, 0.5)
+------------------------------
+ShmeesVMXProbe checks which vector instructions your console's CPU runs, so the media
+center can use them to decode 1080p faster. Launch it once from
+Hdd1:\Homebrew\ShmeesVMXProbe; it takes about 30 seconds. If it freezes the console,
+hold power to turn it off, run your exploit and launch the probe again: it marks that
+instruction as missing and carries on. Repeat until it says "Done".
+The media center reads the result by itself. Settings > Diagnostics shows what the
+probe found, and Settings > "Vector unit for video" only switches on if every
+instruction ran. See Homebrew\ShmeesVMXProbe\README.txt for details.
+
+IF IT DOESN'T START
+-------------------
+A black screen and a return to Aurora, or a freeze: hold the power button to turn the
+console off, then start it and run your exploit the way you always do. The app changes
+nothing outside its own folder. Open an issue on GitHub with ShmeesMediaCenter.log
+(in the app's folder) and what you saw.

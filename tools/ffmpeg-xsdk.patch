@@ -1,0 +1,14 @@
+--- a/libavcodec/ppc/blockdsp.c	2026-11-18 21:48:21.069847510 -0500
++++ b/libavcodec/ppc/blockdsp.c	2026-11-18 21:48:21.083340142 -0500
+@@ -144,6 +144,11 @@
+ 
+ av_cold void ff_blockdsp_init_ppc(BlockDSPContext *c)
+ {
++    // Shmees Media Center (Xbox 360): only with AltiVec allowed, as the dcbzl probe below is one of the instructions
++    // the app checks on the console before turning the PowerPC code on.
++    if (!(av_get_cpu_flags() & AV_CPU_FLAG_ALTIVEC))
++        return;
++
+     // common optimizations whether AltiVec is available or not
+     switch (check_dcbzl_effect()) {
+     case 32:
